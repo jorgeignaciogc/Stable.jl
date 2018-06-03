@@ -424,7 +424,7 @@ function rand(d::StableSupremumExact)
       X = T2
     end
   end
-  return (X,n,counter)
+  return X#(,n,counter)
 end
 
 # @Input: StableSupremum
