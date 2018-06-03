@@ -288,7 +288,7 @@ end
 
 import Distributions.rand
 # @Input: StableSupremumExact
-# @Output: A random sample from a the law d, σ, and counter of missed coalescences
+# @Output: A random sample from a the law d, (can be modified to output σ and counter of missed coalescences too)
 function rand(d::StableSupremumExact)
   (et,et1) = etaF(d.drift)
   # Theta sequence
