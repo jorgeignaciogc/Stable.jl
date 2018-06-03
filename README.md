@@ -1,4 +1,4 @@
-# Stable.jl
+# StableDistributions.jl
 A Julia package for distributions related to strictly stable processes. This package includes the following distributions (using Zolotarev's (C) form):
 <ul>
   <li>StableUnilateral.jl - Unilateral stable distribution with parameter alpha in (0,2]</li>
@@ -14,6 +14,10 @@ alpha in (0,2] and beta in [-1,1]</li>
   <li>For every distribution but StableSupremum.jl, the following are also implemented: mellin, cf, cdf, pdf, and mgf</li>
 </ul>
 
+### Notes: StableSupremum.jl
+This distributions' implementation relies on a recent paper by the authors of the package.
+In particular, some additional parameters are used when sampling from it (see the article for details).
+  
 ## Author and Contributor List
 Jorge I. González Cázares
 
