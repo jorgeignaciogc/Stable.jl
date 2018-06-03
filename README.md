@@ -16,8 +16,8 @@ The following methods are implemented
 </ul>
 
 ### Notes: StableSupremum.jl
-This distributions' implementation relies on a recent paper by the authors of the package.
-In particular, some additional parameters are used when sampling from it (see the article for details).
+This distributions' implementation relies on a recent paper by the authors of the package (see the article for details).
+In particular, some additional parameters are used with a Markov chain when sampling from it.
 
 ## Examples
     using StatsBase
@@ -38,7 +38,7 @@ In particular, some additional parameters are used when sampling from it (see th
     n = 1000
         
     # Samples
-    sSup = rand(dSup,n)
+    (sSup,sigma,counter) = rand(dSup,n)
     sPos = rand(dPos,n)
     b = rand(Bernoulli(dPos.rho),n)
     u = rand(Uniform(),n)
