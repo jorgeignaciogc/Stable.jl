@@ -1,6 +1,6 @@
 __precompile__(true)
 
-module StableDistributions
+module StableFunctionals
 
   using Distributions
   using StatsBase
