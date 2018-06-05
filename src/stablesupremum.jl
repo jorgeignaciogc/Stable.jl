@@ -9,7 +9,7 @@ struct StableSupremum <: ContinuousUnivariateDistribution
   StableSupremum(a,b) = ( b<-1 || b>1 || (b==-1 && a<=1) || a<=0 || a>2 ) ?
     error("Parameters' requirements unmet:\n α∈(0,2] and β∈[-1,1])") :
     (a==2 ? new(2,0.0,0.0,.5) :
-    (b==1 && a<=1 ? StableUnilateral(a) :
+    (b==1 && a<=1 ? StablePositive(a,b) :
     (b==-1 && a>1 ? StablePositive(a,b):
     new(a,b,b*(a<=1 ? 1 : (a-2)/a),(1+b*(a<=1 ? 1 : (a-2)/a))/2))))
 end
