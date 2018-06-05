@@ -1,6 +1,6 @@
 __precompile__(true)
 
-module StableFunctionals
+module StableSupremum
 
   using Distributions
   using StatsBase
@@ -11,9 +11,7 @@ module StableFunctionals
 
   export
     # distribution types
-    Stable,
     StablePositive,
-    StableUnilateral,
     StableSupremum,
 
     # methods
@@ -31,9 +29,7 @@ module StableFunctionals
 
   # Source Files
 
-  include("stable.jl")
   include("stablepositive.jl")
-  include("stableunilateral.jl")
   include("stablesupremum.jl")
 
 end
