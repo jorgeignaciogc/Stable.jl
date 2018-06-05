@@ -1,23 +1,20 @@
-# StableFunctionals.jl
-A Julia package for distributions related to strictly stable processes. This package includes the following distributions (using Zolotarev's (C) form):
+# StableSupremum.jl
+A Julia package for exact simulation of the supremum of a stable process. It supports a few methods and an auxiliary distribution (see below for details). Specifically, this package includes the following distributions (using Zolotarev's (C) form of parametrization):
 <ul>
-  <li>StableUnilateral - Unilateral stable distribution with parameter alpha in (0,2]</li>
-  <li>Stable - Stable distribution with parameters 
-alpha in (0,2] and beta in [-1,1]</li>
-  <li>StablePositive - Stable distribution conditioned to be positive with parameters alpha in (0,2] and beta in [-1,1]</li>
+  <li>StablePositive - Stable random variable conditioned to be positive with parameters alpha in (0,2] and beta in [-1,1]</li>
   <li>StableSupremum - The supremum of a stable process on [0,1] with parameters alpha in (0,2] and beta in [-1,1]</li>
 </ul>
 
 ## Methods
 The following methods are implemented
 <ul>
-  <li>For every distribution: rand, mean, params, minimum, maximum, and insupport</li>
-  <li>For every distribution but StableSupremum.jl: mellin, cdf, pdf, cf, mgf</li>
+  <li>For both distributions: rand, mean, params, minimum, maximum, and insupport</li>
+  <li>For StablePositive: mellin, cdf, pdf, cf, mgf</li>
 </ul>
 
 ### Notes: StableSupremum
 This distributions' implementation relies on a recent paper by the authors of the package (see the article for details).
-In particular, some additional parameters are used with a Markov chain when sampling from it.
+In particular, some additional parameters are used with a Markov chain when sampling from it (see StableSupremumExact in stablesupremum.jl).
 
 ## Examples
     using StatsBase
