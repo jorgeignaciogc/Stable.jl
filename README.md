@@ -13,7 +13,9 @@ The following methods are implemented
 </ul>
 
 ### Notes: StableSupremum
-This distributions' implementation relies on a recent paper by the authors of the package (see the article for details).
+This distributions' implementation relies on a recent paper by the authors of the package. See the article for details at:  
+Jorge González Cázares and Aleksandar Mijatović and Gerónimo Uribe Bravo, *Exact Simulation of the Extrema of Stable Processes*,  arXiv:1806.01870v1 (2018).  
+
 In particular, some additional parameters are used with a Markov chain when sampling from it (see StableSupremumExact in stablesupremum.jl).
 
 ## Examples
