@@ -10,7 +10,8 @@ struct StablePositive <: ContinuousUnivariateDistribution
   StablePositive(a,b) = ( b<-1 || b>1 || (b==-1 && a<=1) || a<=0 || a>2 ) ?
     error("Parameters' requirements unmet:\n α∈(0,2] and β∈[-1,1])") :
     (a==2 ? new(2,0.0,0.0,.5) :
-    new(a,b,b*(a<=1 ? 1 : (a-2)/a),(1+b*(a<=1 ? 1 : (a-2)/a))/2) )
+    (b==1 && a<=1 ? StableUnilateral(a) :
+    new(a,b,b*(a<=1 ? 1 : (a-2)/a),(1+b*(a<=1 ? 1 : (a-2)/a))/2)))
 end
 
 import Distributions.params
@@ -132,16 +133,22 @@ function pdf(d::StablePositive,x::Real)
       return a01*a1*(dot(seq1.*exp(a2.*seq1),weights))
     end
   else
-    nodes, weights = gausslegendre(m)
-    nodes = nodes/2+.5
-    weights = weights/2
-    nodes1 = nodes./(1-nodes)
-    nodes2 = nodes./(1-nodes).^3
-    pir = pi*d.rho
-    mat = abs(x)*nodes1
-    mat = pdf(StableUnilateral(d.a),mat)
-    fC = nodes2.*pdf(Cauchy(-cos(pir),sin(pir)),nodes1)
-    return dot(fC.*mat,weights)/d.rho
+    if x>delta
+      v = 1:Int(floor(18*d.a))
+      w = (-1).^(v-1).*gamma(v.*d.a+1).*sin((pir*d.a).*v)./gamma(v+1)
+      return sum(w.*abs(x).^(-d.a.*v-1))/pi
+    else
+      nodes, weights = gausslegendre(m)
+      nodes = nodes/2+.5
+      weights = weights/2
+      nodes1 = nodes./(1-nodes)
+      nodes2 = nodes./(1-nodes).^3
+      pir = pi*d.rho
+      mat = abs(x)*nodes1
+      mat = pdf(StableUnilateral(d.a),mat)
+      fC = nodes2.*pdf(Cauchy(-cos(pir),sin(pir)),nodes1)
+      return dot(fC.*mat,weights)/d.rho
+    end
   end
 end
 
@@ -191,8 +198,12 @@ function pdf(d::StablePositive,X::AbstractArray)
     fC = nodes2.*pdf(Cauchy(-cos(pir),sin(pir)),nodes1)
     mat = abs(x)*transpose(nodes1)
     mat = pdf(StableUnilateral(d.a),mat)
+    w = (-1).^(v-1).*gamma(v.*d.a+1).*sin((pir*d.a).*v)./gamma(v+1)
     for i=1:length(x)
-      if x[i]>0
+      if x[i]>delta
+        v = 1:Int(floor(18*d.a))
+        push!(res,sum(w.*abs(x[i]).^(-d.a.*v-1))/pi)
+      elseif x[i]>0
         push!(res,dot(fC.*mat[i,:],weights))
       elseif x[i]<0
         push!(res,0.0)
@@ -223,24 +234,30 @@ function cdf(d::StablePositive,x::Real)
     s2 = 1-d.rho
     if x<delta
       v = 1:Int(floor(18*d.a))
-      w = (-1).^(v-1).*gamma(v./d.a+1).*sin(pir.*v)./(pi.*v.*gamma(v+1))
-      return sum(w.*abs(x).^v)/d.rho
+      w = (-1).^(v-1).*gamma(v./d.a+1).*sin(pir.*v)./(v.*gamma(v+1))
+      return sum(w.*abs(x).^v)/(d.rho*pi)
     else
       nodes, weights = gausslegendre(m)
       seq1 = auxV2(nodes .*s1+s2,d.a,d.theta)
       return 1-s1*(dot(exp(a2.*seq1),weights))/(2*d.rho)
     end
   else
-    nodes, weights = gausslegendre(m)
-    nodes = nodes/2+.5
-    weights = weights/2
-    nodes1 = nodes./(1-nodes)
-    nodes2 = 1./(1-nodes).^2
-    pir = pi*d.rho
-    mat = abs(x)*nodes1
-    mat = cdf(StableUnilateral(d.a),mat)
-    fC = nodes2.*pdf(Cauchy(-cos(pir),sin(pir)),nodes1)
-    return dot(fC.*mat,weights)/d.rho
+    if x>delta
+      v = 1:Int(floor(18*d.a))
+      w = (-1).^(v-1).*gamma(v.*d.a+1).*sin((pir*d.a).*v)./(v.*gamma(v+1))
+      return 1-sum(w.*abs(x).^(-d.a.*v))/(d.a*pi)
+    else
+      nodes, weights = gausslegendre(m)
+      nodes = nodes/2+.5
+      weights = weights/2
+      nodes1 = nodes./(1-nodes)
+      nodes2 = 1./(1-nodes).^2
+      pir = pi*d.rho
+      mat = abs(x)*nodes1
+      mat = cdf(StableUnilateral(d.a),mat)
+      fC = nodes2.*pdf(Cauchy(-cos(pir),sin(pir)),nodes1)
+      return dot(fC.*mat,weights)/d.rho
+    end
   end
 end
 
@@ -284,8 +301,12 @@ function cdf(d::StablePositive,X::AbstractArray)
     fC = nodes2.*pdf(Cauchy(-cos(pir),sin(pir)),nodes1)
     mat = abs(x)*transpose(nodes1)
     mat = cdf(StableUnilateral(d.a),mat)
+    w = (-1).^(v-1).*gamma(v.*d.a+1).*sin((pir*d.a).*v)./(v.*gamma(v+1))
     for i=1:length(x)
-      if x[i]>0
+      if x[i] > delta
+        v = 1:Int(floor(18*d.a))
+        push!(res, 1-sum(w.*abs(x[i]).^(-d.a.*v))/(d.a*pi))
+      elseif x[i]>0
         push!(res,aux+dot(fC.*mat[i,:],weights))
       else
         push!(res,0.0)
