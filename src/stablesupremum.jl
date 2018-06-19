@@ -9,7 +9,7 @@ struct StableSupremum <: ContinuousUnivariateDistribution
   StableSupremum(a,b) = ( b<-1 || b>1 || (b==-1 && a<=1) || a<=0 || a>2 ) ?
     error("Parameters' requirements unmet:\n α∈(0,2] and β∈[-1,1])") :
     (a==2 ? new(2,0.0,0.0,.5) :
-    (b==1 && a<=1 ? StablePositive(a,b) :
+    (b==1 && a<=1 ? StableUnilateral(a) :
     (b==-1 && a>1 ? StablePositive(a,b):
     new(a,b,b*(a<=1 ? 1 : (a-2)/a),(1+b*(a<=1 ? 1 : (a-2)/a))/2))))
 end
@@ -45,19 +45,20 @@ struct StableSupremumExact <: Sampleable{Univariate,Continuous}
   theta::Float64
   rho::Float64
   drift::Float64
+  eta::Float64
   delta::Float64
   gamma::Float64
   kappa::Float64
   StableSupremumExact(a,b,drift,delta,gamma,kappa) = ( b<-1 || b>1 || (b==-1 && a<=1) || a<=0 || a>2 || kappa < max(1,log(2)/(3*etaF(drift)))) ?
     error("Parameters' requirements unmet:\n α∈(0,2], β∈[-1,1], 1>d>δ>0, α>γ>0, κ>max(1,log(2)/(3η))") :
-    new(a,b,b*(a<=1 ? 1 : (a-2)/a),(1+b*(a<=1 ? 1 : (a-2)/a))/2, drift, delta, gamma, kappa)
+    new(a,b,b*(a<=1 ? 1 : (a-2)/a),(1+b*(a<=1 ? 1 : (a-2)/a))/2, drift, etaF(drift), delta, gamma, kappa)
   StableSupremumExact(a,b) = ( b<-1 || b>1 || (b==-1 && a<=1) || a<=0 || a>2 ) ?
     error("Parameters' requirements unmet:\n α∈(0,2] and β∈[-1,1])") :
-    new(a,b,b*(a<=1 ? 1 : (a-2)/a),(1+b*(a<=1 ? 1 : (a-2)/a))/2, 2/3, 1/3, a*5/6, max(1,log(2)/(3*etaF(2/3)[1])))
+    new(a,b,b*(a<=1 ? 1 : (a-2)/a),(1+b*(a<=1 ? 1 : (a-2)/a))/2, 2/3, etaF(drift), 1/3, a*5/6, max(1,log(2)/(3*etaF(2/3))))
 end
 
 function ExactSampler(d::StableSupremum,drift::Real,delta::Real,gamma::Real, kappa::Real)
-  if 0 < delta < drift < 1 && 0 < gamma < d.a && kappa >= max(1,log(2)/(3*etaF(drift)[1]))
+  if 0 < delta < drift < 1 && 0 < gamma < d.a && kappa >= max(1,log(2)/(3*etaF(drift)))
     return StableSupremumExact(d.a,d.b,drift,delta,gamma,kappa)
   else
     error("Unacceptable Parameters")
@@ -65,15 +66,14 @@ function ExactSampler(d::StableSupremum,drift::Real,delta::Real,gamma::Real, kap
 end
 
 function ExactSampler(d::StableSupremum)
-  return StableSupremumExact(d.a,d.b,2/3,1/3,d.a*5/6, max(1,log(2)/(3*etaF(2/3)[1])))
+  return StableSupremumExact(d.a,d.b,2/3,1/3,d.a*5/6, max(1,log(2)/(3*etaF(2/3))))
 end
 
 using LambertW
 # @Input: the normalized drift d
 # @Returns: the value of η>0, 0 < 1/(1+η) < 1, and of κ
 function etaF(drift::Real)
-  et = -lambertw(-drift*exp(-drift),-1)/drift-1
-  return (et,1/(et+1))
+  return -lambertw(-drift*exp(-drift),-1)/drift-1
 end
 
 # @Input: the output of etaF() and a bound M we want to know if we exceed
@@ -288,9 +288,9 @@ end
 
 import Distributions.rand
 # @Input: StableSupremumExact
-# @Output: A random sample from a the law d, (can be modified to output σ and counter of missed coalescences too)
+# @Output: A random sample from a the law d, σ, and counter of missed coalescences
 function rand(d::StableSupremumExact)
-  (et,et1) = etaF(d.drift)
+  et1 = 1/(d.eta+1)
   # Theta sequence
   U = Float64[]
   Lambda = Float64[]
@@ -319,12 +319,12 @@ function rand(d::StableSupremumExact)
   # Step 2 in Algorithm 2
   t = 0
   x = Inf
-  (C,F) = downRW(d.drift,et,et1,d.kappa,x)
+  (C,F) = downRW(d.drift,d.eta,et1,d.kappa,x)
   C = C/ar
   F = F/d.rho
   R = Float64[]
   while true
-    (C1,F1,x,t) = BSAlgorithm(d.drift,et,et1,d.kappa,x,C[end]*ar)
+    (C1,F1,x,t) = BSAlgorithm(d.drift,d.eta,et1,d.kappa,x,C[end]*ar)
     t = t+length(C)
     append!(C,C1/ar)
     append!(F,F1/d.rho)
@@ -369,7 +369,7 @@ function rand(d::StableSupremumExact)
     chi = length(S)
     # Step 8 in Algorithm 2
     while true
-      (C1,F1,x,t) = BSAlgorithm(d.drift,et,et1,d.kappa,x,C[end]*ar)
+      (C1,F1,x,t) = BSAlgorithm(d.drift,d.eta,et1,d.kappa,x,C[end]*ar)
       t = t+length(C)
       append!(C,C1/ar)
       append!(F,F1/d.rho)
