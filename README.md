@@ -1,4 +1,4 @@
-# StableSupremum.jl
+# SupStable.jl
 A Julia package for exact simulation of the supremum of a stable process. It supports a few methods and an auxiliary distribution (see below for details). Specifically, this package includes the following distributions (using Zolotarev's (C) form of parametrization):
 <ul>
   <li>StableSupremum - The supremum of a stable process on [0,1] with parameters alpha in (0,2] and beta in [-1,1]</li>
