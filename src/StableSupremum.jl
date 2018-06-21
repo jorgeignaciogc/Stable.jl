@@ -13,6 +13,8 @@ module StableSupremum
     # distribution types
     StablePositive,
     StableSupremum,
+    StableUnilateral,
+    Stable,
 
     # methods
     rand,
@@ -31,5 +33,7 @@ module StableSupremum
 
   include("stablepositive.jl")
   include("stablesupremum.jl")
+  include("stableunilateral.jl")
+  include("stable.jl")
 
 end
