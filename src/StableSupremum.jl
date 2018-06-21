@@ -1,6 +1,6 @@
 __precompile__(true)
 
-module StableSupremum
+module SupStable
 
   using Distributions
   using StatsBase
