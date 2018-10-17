@@ -10,9 +10,9 @@ A Julia package for exact simulation of the supremum of a stable process. It sup
     and 
   <a href="https://www.codecogs.com/eqnedit.php?latex=$\beta\in[-1,1]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\beta\in[-1,1]$" title="$\beta\in[-1,1]$" /></a></li>
   <li>StableUnilateral - Stable random variable with parameter 
-  <a href="https://www.codecogs.com/eqnedit.php?latex=$\alpha\in(0,1]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\alpha\in(0,1]$" title="$\alpha\in(0,1]$" /></li>
+  <a href="https://www.codecogs.com/eqnedit.php?latex=$\alpha\in(0,1]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\alpha\in(0,1]$" title="$\alpha\in(0,1]$" /></a></li>
   <li>Stable - Stable random variable with parameters 
-    <a href="https://www.codecogs.com/eqnedit.php?latex=$\alpha\in(0,2]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\alpha\in(0,2]$" title="$\alpha\in(0,2]$" /></a>
+  <a href="https://www.codecogs.com/eqnedit.php?latex=$\alpha\in(0,2]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\alpha\in(0,2]$" title="$\alpha\in(0,2]$" /></a>
     and 
   <a href="https://www.codecogs.com/eqnedit.php?latex=$\beta\in[-1,1]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\beta\in[-1,1]$" title="$\beta\in[-1,1]$" /></a></li>
 </ul>
