@@ -1,10 +1,20 @@
 # SupStable.jl
 A Julia package for exact simulation of the supremum of a stable process. It supports a few methods and an auxiliary distribution (see below for details). Specifically, this package includes the following distributions (using Zolotarev's (C) form of parametrization):
 <ul>
-  <li>StableSupremum - The supremum of a stable process on [0,1] with parameters alpha in (0,2] and beta in [-1,1]</li>
-  <li>StablePositive - Stable random variable conditioned to be positive with parameters alpha in (0,2] and beta in [-1,1]</li>
-  <li>StableUnilateral - Stable random variable with parameter alpha in (0,1]</li>
-  <li>Stable - Stable random variable with parameters alpha in (0,2] and beta in [-1,1]</li>
+  <li>StableSupremum - The supremum of a stable process on [0,1] with parameters 
+    <a href="https://www.codecogs.com/eqnedit.php?latex=$\alpha\in(0,2]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\alpha\in(0,2]$" title="$\alpha\in(0,2]$" /></a>
+    and 
+    <a href="https://www.codecogs.com/eqnedit.php?latex=$\beta\in[-1,1]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\beta\in[-1,1]$" title="$\beta\in[-1,1]$" /></a></li>
+  <li>StablePositive - Stable random variable conditioned to be positive with parameters 
+    <a href="https://www.codecogs.com/eqnedit.php?latex=$\alpha\in(0,2]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\alpha\in(0,2]$" title="$\alpha\in(0,2]$" /></a>
+    and 
+  <a href="https://www.codecogs.com/eqnedit.php?latex=$\beta\in[-1,1]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\beta\in[-1,1]$" title="$\beta\in[-1,1]$" /></a></li>
+  <li>StableUnilateral - Stable random variable with parameter 
+  <a href="https://www.codecogs.com/eqnedit.php?latex=$\alpha\in(0,1]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\alpha\in(0,1]$" title="$\alpha\in(0,1]$" /></li>
+  <li>Stable - Stable random variable with parameters 
+    <a href="https://www.codecogs.com/eqnedit.php?latex=$\alpha\in(0,2]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\alpha\in(0,2]$" title="$\alpha\in(0,2]$" /></a>
+    and 
+  <a href="https://www.codecogs.com/eqnedit.php?latex=$\beta\in[-1,1]$" target="_blank"><img src="https://latex.codecogs.com/gif.latex?$\beta\in[-1,1]$" title="$\beta\in[-1,1]$" /></a></li>
 </ul>
 
 ## Methods
