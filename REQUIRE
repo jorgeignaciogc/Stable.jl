@@ -1,7 +1,5 @@
-julia 0.6
-Calculus 0.4.0
-StatsBase 0.17.0
-Distributions 0.15.0
-FastGaussQuadrature 0.3.0
-SpecialFunctions 0.1.0
-LambertW 0.2.0
+julia 1.0
+Distributions v0.16.4
+FastGaussQuadrature v0.3.2
+SpecialFunctions v0.7.2
+LambertW v0.4.3
