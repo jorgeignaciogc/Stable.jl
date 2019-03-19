@@ -31,13 +31,11 @@ Stable <: ContinuousUnivariateDistribution
 This type has a single standard constructor `Stable(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1} and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
 
 #### Remarks
-<ul>
-<li>Method `params(d::Stable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form (i.e.,
-`ρ=1-cdf(d,0)` and `θ=2*ρ-1`).</li>
-<li>Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and where `F` is either`Real` or `Complex`.</li>
-<li>Method `rand(d::Stable)` is based on [Chambers-Mellows-Stuck algorithm](https://en.wikipedia.org/wiki/Stable_distribution#Simulation_of_stable_variables).</li>
 
-</ul>
+* Method `params(d::Stable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form (i.e.,
+`ρ=1-cdf(d,0)` and `θ=2*ρ-1`).
+* Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and where `F` is either`Real` or `Complex`.
+* Method `rand(d::Stable)` is based on [Chambers-Mellows-Stuck algorithm](https://en.wikipedia.org/wiki/Stable_distribution#Simulation_of_stable_variables).
 
 ### PositiveStable - _Type_
 
@@ -47,11 +45,9 @@ PositiveStable <: ContinuousUnivariateDistribution
 This type has a single standard constructor `PositiveStable(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1} and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
 
 #### Remarks
-<ul>
-<li>Method `params(d::PositiveStable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.</li>
-<li>Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and where `F` is either`Real` or `Complex`.</li>
 
-</ul>
+* Method `params(d::PositiveStable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.
+* Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and where `F` is either`Real` or `Complex`.
 
 ### SupremumStable - _Type_
 
@@ -61,13 +57,11 @@ SupremumStable <: ContinuousUnivariateDistribution
 This type has a single standard constructor `SupremumStable(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1] and supports the methods `minimum`, `maximum`, `insupport`, `mean`, `params`, `rand` and `sampler`.
 
 #### Remarks
-<ul>
-<li>Method `params(d::SupremumStable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.</li>
-<li>If β=-1, constructor automatically defaults to `PositiveStable(α,β)` since they agree (see Theorem 3.1 in [(Michna, 2013)](https://doi.org/10.1214/ECP.v18-2236)).</li>
-<li>`sampler(d::SupremumStable)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `PerfectSumpremumSampler`.</li>
-<li>`rand(d::SupremumStable)` calls `rand(sampler(d))`.</li>
 
-</ul>
+* Method `params(d::SupremumStable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.
+* If β=-1, constructor automatically defaults to `PositiveStable(α,β)` since they agree (see Theorem 3.1 in [(Michna, 2013)](https://doi.org/10.1214/ECP.v18-2236)).
+* `sampler(d::SupremumStable)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `PerfectSumpremumSampler`.
+* `rand(d::SupremumStable)` calls `rand(sampler(d))`.
 
 ### PerfectSupremumStable - _Type_
 
@@ -75,13 +69,12 @@ This type has a single standard constructor `SupremumStable(α::Real,β::Real)` 
 PerfectSupremumStable <: Sampleable{Univariate,Continuous}
 ```
 This is an auxiliary sub type for generating exact samples of `SupremumStable` by means of _perfect simulation_, which has multiple hyperparameters (see the [references](#references) for more details and the conditions they must satisfy). This sub type supports `params` and the following constructors (for every omitted parameter, the constructor uses a suggested value):
-<ul>
-<li>`PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int)`,</li>
-<li>`PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int)`,</li>
-<li>`PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real)`,</li>
-<li>`PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real)`,</li>
-<li>`PerfectSupremumStable(α::Real,β::Real)`.</li>
-</ul>
+
+* `PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int)`,
+* `PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int)`,
+* `PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real)`,
+* `PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real)`,
+* `PerfectSupremumStable(α::Real,β::Real)`.
 
 <a name="references"/>
 
