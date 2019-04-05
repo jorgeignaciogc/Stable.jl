@@ -369,13 +369,13 @@ function rand(d::PerfectSupremumStable)
   end # Line 15
   # Line 16
   while length(U) < length(S)
-    T = rand(Poisson((1 - d.ρ)*F[length(U)+1]))
+    T = rand(Poisson(d.α*(1-d.ρ)*F[length(U)+1]))
     if T == 0
-      push!(U,exp(-F[length(U)+1]))
+      push!(U,exp(-d.α*F[length(U)+1]))
       push!(Λ,1)
     else
-      push!(U,exp(-F[length(U)+1]*rand(Beta(1,T))))
-      push!(Λ,(exp(-F[length(U)])/U[end])^ra)
+      push!(U,exp(-d.α*F[length(U)+1]*rand(Beta(1,T))))
+      push!(Λ,exp(-F[length(U)])/U[end]^ra)
     end
   end
   # Lines 17, 18 and 19
@@ -440,13 +440,13 @@ function rand(d::PerfectSupremumStable)
     end # Line 15
     # Line 16
     while length(U) < length(S)
-      T = rand(Poisson((1 - d.ρ)*F[length(U)+1]))
+      T = rand(Poisson(d.α*(1-d.ρ)*F[length(U)+1]))
       if T == 0
-        push!(U,exp(-F[length(U)+1]))
+        push!(U,exp(-d.α*F[length(U)+1]))
         push!(Λ,1)
       else
-        push!(U,exp(-F[length(U)+1]*rand(Beta(1,T))))
-        push!(Λ,(exp(-F[length(U)])/U[end])^ra)
+        push!(U,exp(-d.α*F[length(U)+1]*rand(Beta(1,T))))
+        push!(Λ,exp(-F[length(U)]/U[end])^ra)
       end
     end
     # Lines 17, 18 and 19
