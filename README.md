@@ -83,7 +83,7 @@ This is an auxiliary sub type for generating exact samples of `SupremumStable` b
 ### StableSupremum 
 
 This distribution's implementation relies on a recent paper by the authors of the package. See the article for details at: 
-Jorge González Cázares and Aleksandar Mijatović and Gerónimo Uribe Bravo, *Exact Simulation of the Extrema of Stable Processes*, [arXiv:1806.01870v2](https://arxiv.org/abs/1806.01870v2) (2018). Consequently, some additional parameters are used with a Markov chain when sampling from it (see StableSupremumExact in stablesupremum.jl). In this reference, the variables `Δ` and `mAst` are denoted <a href="https://www.codecogs.com/eqnedit.php?latex=\Delta(0)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Delta(0)" title="\Delta(0)" /></a> and <a href="https://www.codecogs.com/eqnedit.php?latex=m^\ast" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m^\ast" title="m^\ast" /></a>, respectively.
+Jorge González Cázares and Aleksandar Mijatović and Gerónimo Uribe Bravo, *Exact Simulation of the Extrema of Stable Processes*, [arXiv:1806.01870v2](https://arxiv.org/abs/1806.01870v2) (2018). Consequently, some additional parameters are used with a Markov chain when sampling from it (see PerfectStableSupremum in stablesupremum.jl). In this reference, the variables `Δ` and `mAst` are denoted <a href="https://www.codecogs.com/eqnedit.php?latex=\Delta(0)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Delta(0)" title="\Delta(0)" /></a> and <a href="https://www.codecogs.com/eqnedit.php?latex=m^\ast" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m^\ast" title="m^\ast" /></a>, respectively.
 Throughout the paper, the authors work on the parameters (α,ρ) where ρ is the positivity parameter and can be computed from (α,β) (see Appendix A in the reference).
 
 
@@ -126,7 +126,7 @@ print("The p-value is ", 1-cdf(KSDist(n),ks))
 
 ### Example 2  
 
-This is the code that outputs (the first plot of) Figure 2 of the reference (the empirical CDF of the sample against the exact CDF in the spectrally negative infinite variation case) if run repeatedly for all three parameter choices without resetting the seed.
+This is the code that outputs (the first plot of) Figure 2 of the reference (the empirical CDF of the sample against the true CDF in the spectrally negative infinite variation case) if run repeatedly for all three parameter choices without resetting the seed.
 
 ```julia
 using Distributions, StatsBase, SpecialFunctions, Random, FastGaussQuadrature, Gadfly, DataFrames
