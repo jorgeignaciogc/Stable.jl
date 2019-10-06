@@ -61,14 +61,14 @@ This type has a single standard constructor `SupremumStable(α::Real,β::Real)` 
 * Method `params(d::SupremumStable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.
 * If β=-1, constructor automatically defaults to `PositiveStable(α,β)` since they agree (see Theorem 3.1 in [(Michna, 2013)](https://doi.org/10.1214/ECP.v18-2236)).
 * `sampler(d::SupremumStable)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `PerfectSumpremumStable`. The optional arguments in `sampler(d::SupremumStable,args...)` are as in the constructor below of `PerfectSumpremumStable` below.
-* `rand(d::SupremumStable)` calls `rand(sampler(d))`.
+* `rand(d::SupremumStable)` calls `rand(sampler(d))[1]`.
 
 ### PerfectSupremumStable - _Type_
 
 ```
 PerfectSupremumStable <: Sampleable{Univariate,Continuous}
 ```
-This is an auxiliary sub type for generating exact samples of `SupremumStable` by means of _perfect simulation_, which has multiple hyperparameters (see the [references](#references) for more details and the conditions they must satisfy). This sub type supports `params` and the following constructors (for every omitted parameter, the constructor uses a suggested value):
+This is an auxiliary sub type for generating exact samples of `SupremumStable` by means of _perfect simulation_, which has multiple hyperparameters (see the [references](#references) for more details and the conditions they must satisfy). The output of `rand` has the form `(x,s)` where `x` is the sample and `s` is the number of steps that the internal process ran for (beyond the user-defined warm up period). This sub type supports `params` and the following constructors (for every omitted parameter, the constructor uses a suggested value):
 
 * `PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int)`,
 * `PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int)`,
