@@ -492,4 +492,4 @@ function rand(d::SupremumStable)
   return (β == -1 && α <= 1) ? 0. : rand(sampler(d))[1]
 end
 
-export SupremumStable, rand, ExactSampler, minimum, maximum, insupport, mean, params
+export SupremumStable, rand, sampler, PerfectSupremumStable, minimum, maximum, insupport, mean, params
