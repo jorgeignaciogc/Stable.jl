@@ -60,7 +60,7 @@ This type has a single standard constructor `SupremumStable(α::Real,β::Real)` 
 
 * Method `params(d::SupremumStable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.
 * If β=-1, constructor automatically defaults to `PositiveStable(α,β)` since they agree (see Theorem 3.1 in [(Michna, 2013)](https://doi.org/10.1214/ECP.v18-2236)).
-* `sampler(d::SupremumStable)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `PerfectSumpremumStable`.
+* `sampler(d::SupremumStable)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `PerfectSumpremumStable`. The optional arguments in `sampler(d::SupremumStable,args...)` are as in the constructor below of `PerfectSumpremumStable` below.
 * `rand(d::SupremumStable)` calls `rand(sampler(d))`.
 
 ### PerfectSupremumStable - _Type_
