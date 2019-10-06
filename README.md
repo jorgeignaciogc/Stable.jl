@@ -68,7 +68,7 @@ This type has a single standard constructor `SupremumStable(α::Real,β::Real)` 
 ```
 PerfectSupremumStable <: Sampleable{Univariate,Continuous}
 ```
-This is an auxiliary sub type for generating exact samples of `SupremumStable` by means of _perfect simulation_, which has multiple hyperparameters (see the [references](#references) for more details and the conditions they must satisfy). The output of `rand` has the form `(x,s)` where `x` is the sample and `s` is the number of steps that the internal process ran for (beyond the user-defined warm up period). This sub type supports `params` and the following constructors (for every omitted parameter, the constructor uses a suggested value):
+This is an auxiliary sub type for generating exact samples of `SupremumStable` by means of _perfect simulation_, which has multiple hyperparameters (see the [references](#references) for more details and the conditions they must satisfy). The output of `rand` has the form `(x,s)` where `x` is the sample and `s` is the number of steps that the internal process ran for (beyond the user-defined warm up period `Δ`). This sub type supports `params` and the following constructors (for every omitted parameter, the constructor uses a suggested value):
 
 * `PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int,mAst::Int)`,
 * `PerfectSupremumStable(α::Real,β::Real,d::Real,δ::Real,γ::Real,κ::Real,Δ::Int)`,
