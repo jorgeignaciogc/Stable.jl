@@ -1,11 +1,10 @@
 # SupStable.jl
 
 A Julia package for exact simulation of the supremum of a stable process. It supports a few methods and an auxiliary distribution (see below for details). Specifically, this package includes the following distributions (using Zolotarev's (C) form of parametrization):
-<ul>
-<li>Stable - Stable random variable with parameters (α,β)∈(0,2]×[-1,1].</li>
-<li>PositiveStable - Stable random variable conditioned to be positive with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1}.</li>
-<li>SupremumStable - The supremum of a stable process on [0,1] with parameters (α,β)∈(0,2]×[-1,1].</li>
-</ul>
+
+* Stable - Stable random variable with parameters `(α,β)∈(0,2]×[-1,1]`.
+* PositiveStable - Stable random variable conditioned to be positive with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}`.
+* SupremumStable - The supremum of a stable process on `[0,1]` with parameters `(α,β)∈(0,2]×[-1,1]`.
 
 ## Table of Contents
 
@@ -28,11 +27,11 @@ The distributions included support most of the standard functions as outlined in
 ```julia
 Stable <: ContinuousUnivariateDistribution
 ```
-This type has a single standard constructor `Stable(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1} and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
+This type has a single standard constructor `Stable(α::Real,β::Real)` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}` and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
 
 #### Remarks
 
-* Method `params(d::Stable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form (i.e.,
+* Method `params(d::Stable)` returns the tuple `(α,β,θ,ρ)` following Zolotarev's (C) form (i.e.,
 `ρ=1-cdf(d,0)` and `θ=2*ρ-1`).
 * Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and `F` is either`Real` or `Complex`.
 * Method `rand(d::Stable)` is based on [Chambers-Mellows-Stuck algorithm](https://en.wikipedia.org/wiki/Stable_distribution#Simulation_of_stable_variables).
@@ -42,11 +41,11 @@ This type has a single standard constructor `Stable(α::Real,β::Real)` with par
 ```julia
 PositiveStable <: ContinuousUnivariateDistribution
 ```
-This type has a single standard constructor `PositiveStable(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1]-(0,1]×{-1} and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
+This type has a single standard constructor `PositiveStable(α::Real,β::Real)` with parameters `(α,β)∈(0,2]×[-1,1]-(0,1]×{-1}` and supports the methods `minimum`, `maximum`, `insupport`, `pdf`, `cdf`, `cf`, `mgf`, `mean`, `var`, `mellin`, `params` and `rand`.
 
 #### Remarks
 
-* Method `params(d::PositiveStable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.
+* Method `params(d::PositiveStable)` returns the tuple `(α,β,θ,ρ)` following Zolotarev's (C) form.
 * Method `mellin(d::PositiveStable,X::T)` returns the [Mellin transform](https://en.wikipedia.org/wiki/Mellin_transform), where `T` is either `F` or `AbstractArray{F}` and where `F` is either`Real` or `Complex`.
 
 ### SupremumStable - _Type_
@@ -54,12 +53,12 @@ This type has a single standard constructor `PositiveStable(α::Real,β::Real)` 
 ```julia
 SupremumStable <: ContinuousUnivariateDistribution
 ```
-This type has a single standard constructor `SupremumStable(α::Real,β::Real)` with parameters (α,β)∈(0,2]×[-1,1] and supports the methods `minimum`, `maximum`, `insupport`, `mean`, `params`, `rand` and `sampler`.
+This type has a single standard constructor `SupremumStable(α::Real,β::Real)` with parameters `(α,β)∈(0,2]×[-1,1]` and supports the methods `minimum`, `maximum`, `insupport`, `mean`, `params`, `rand` and `sampler`.
 
 #### Remarks
 
-* Method `params(d::SupremumStable)` returns the tuple (α,β,θ,ρ) following Zolotarev's (C) form.
-* If β=-1, constructor automatically defaults to `PositiveStable(α,β)` since they agree (see Theorem 3.1 in [(Michna, 2013)](https://doi.org/10.1214/ECP.v18-2236)).
+* Method `params(d::SupremumStable)` returns the tuple `(α,β,θ,ρ)` following Zolotarev's (C) form.
+* If `β=-1`, constructor automatically defaults to `PositiveStable(α,β)` since they agree (see Theorem 3.1 in [(Michna, 2013)](https://doi.org/10.1214/ECP.v18-2236)).
 * `sampler(d::SupremumStable)` returns a subtype [Sampler](https://juliastats.github.io/Distributions.jl/stable/extends.html) of sub type `PerfectSumpremumStable`. The optional arguments in `sampler(d::SupremumStable,args...)` are as in the constructor below of `PerfectSumpremumStable` below.
 * `rand(d::SupremumStable)` calls `rand(sampler(d))[1]`.
 
@@ -84,7 +83,7 @@ This is an auxiliary sub type for generating exact samples of `SupremumStable` b
 
 This distribution's implementation relies on a recent paper by the authors of the package. See the article for details at: 
 Jorge González Cázares and Aleksandar Mijatović and Gerónimo Uribe Bravo, *Exact Simulation of the Extrema of Stable Processes*, [arXiv:1806.01870v2](https://arxiv.org/abs/1806.01870v2) (2018). Consequently, some additional parameters are used with a Markov chain when sampling from it (see PerfectStableSupremum in stablesupremum.jl). In this reference, the variables `Δ` and `mAst` are denoted <a href="https://www.codecogs.com/eqnedit.php?latex=\Delta(0)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\Delta(0)" title="\Delta(0)" /></a> and <a href="https://www.codecogs.com/eqnedit.php?latex=m^\ast" target="_blank"><img src="https://latex.codecogs.com/gif.latex?m^\ast" title="m^\ast" /></a>, respectively.
-Throughout the paper, the authors work on the parameters (α,ρ) where ρ is the positivity parameter and can be computed from (α,β) (see Appendix A in the reference).
+Throughout the paper, the authors work on the parameters `(α,ρ)` where `ρ` is the positivity parameter and can be computed from `(α,β)` (see Appendix A in the reference).
 
 
 <a name="examples"/>
@@ -93,7 +92,7 @@ Throughout the paper, the authors work on the parameters (α,ρ) where ρ is the
 
 ### Example 1  
 
-In the case of infinite variation spectrally negative α-stable processes (i.e., when α>1 and β=-1), it is known that the StablePositive and StableSupremum distributions agree according to Theorem 3.1 in [(Michna, 2013)](https://doi.org/10.1214/ECP.v18-2236). We will check this empirically by comparing the empirical distribution function of multiple samples and the real distribution function and applying the [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
+In the case of infinite variation spectrally negative α-stable processes (i.e., when `α>1` and `β=-1`), it is known that the StablePositive and StableSupremum distributions agree according to Theorem 3.1 in [(Michna, 2013)](https://doi.org/10.1214/ECP.v18-2236). We will check this empirically by comparing the empirical distribution function of multiple samples and the real distribution function and applying the [Kolmogorov-Smirnov test](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test).
 
 ```julia
 using StatsBase, Distributions, Random, SpecialFunctions
